@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import GlobalStyle from './styles/global';
 
+import './config/reactotron';
+
 import { Wrapper, Container, Content } from './styles/components';
 
 import Sidebar from './components/Sidebar';
