@@ -20,9 +20,11 @@ import PauseIcon from '../../assets/images/pause.svg';
 import ForwardIcon from '../../assets/images/forward.svg';
 import RepeatIcon from '../../assets/images/repeat.svg';
 
-const Player = ({ player, play, pause }) => (
+const Player = ({
+  player, play, pause, next, prev,
+}) => (
   <Container>
-    {!!player.currentSong && <Sound url={player.currentSong.file} playStatus={player.status} />}
+    {!!player.currentSong && <Sound url={player.currentSong.file} playStatus={player.status} onFinishedPlaying={next} />}
 
     <Current>
       {!!player.currentSong && (
@@ -43,7 +45,7 @@ const Player = ({ player, play, pause }) => (
           <img src={ShuffleIcon} alt="Aleatório" />
         </button>
 
-        <button type="button">
+        <button type="button" onClick={prev}>
           <img src={BackwardIcon} alt="Anterior" />
         </button>
 
@@ -57,7 +59,7 @@ const Player = ({ player, play, pause }) => (
           </button>
         )}
 
-        <button type="button">
+        <button type="button" onClick={next}>
           <img src={ForwardIcon} alt="Próxima" />
         </button>
 
@@ -103,6 +105,8 @@ Player.propTypes = {
   }).isRequired,
   play: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
+  next: PropTypes.func.isRequired,
+  prev: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
