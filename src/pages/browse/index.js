@@ -10,10 +10,13 @@ import {
 
 import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
 
+import Loading from '../../components/Loading';
+
 class Browse extends Component {
   static propTypes = {
     getPlaylistsRequest: PropTypes.func.isRequired,
     playlists: PropTypes.shape({
+      loading: PropTypes.bool,
       data: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number,
         title: PropTypes.string,
@@ -30,7 +33,7 @@ class Browse extends Component {
   render() {
     return (
       <Container>
-        <Title>Navegar</Title>
+        <Title>Navegar {this.props.playlists.loading && <Loading />}</Title>
 
         <List>
           {this.props.playlists.data.map(playlist => (
