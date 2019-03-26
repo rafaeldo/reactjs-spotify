@@ -71,12 +71,11 @@ class Playlist extends Component {
             {!!playlist.songs && playlist.songs.length > 1 && (
               <p>
                 {playlist.songs.length}
-                {' '}
-músicas
+                {' '}músicas
               </p>
             )}
 
-            <button>PLAY</button>
+            <button type="button">PLAY</button>
           </div>
         </Header>
 

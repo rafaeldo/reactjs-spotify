@@ -29,23 +29,23 @@ const Player = () => (
 
     <Progress>
       <Controls>
-        <button>
+        <button type="button">
           <img src={ShuffleIcon} alt="Aleatório" />
         </button>
 
-        <button>
+        <button type="button">
           <img src={BackwardIcon} alt="Anterior" />
         </button>
 
-        <button>
+        <button type="button">
           <img src={PlayIcon} alt="Tocar" />
         </button>
 
-        <button>
+        <button type="button">
           <img src={ForwardIcon} alt="Próxima" />
         </button>
 
-        <button>
+        <button type="button">
           <img src={RepeatIcon} alt="Repetir" />
         </button>
       </Controls>
