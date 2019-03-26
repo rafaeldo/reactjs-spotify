@@ -1,24 +1,61 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import {
   Container, Title, List, Playlist,
 } from './styles';
 
-const Browse = () => (
-  <Container>
-    <Title>Navegar</Title>
+import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
 
-    <List>
-      <Playlist to="/playlists/1">
-        <img
-          src="https://img.discogs.com/TV3Wkv9wr-l9aJUxQ-QB-m420YQ=/fit-in/300x300/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-1243297-1393304135-4550.jpeg.jpg"
-          alt="Capa do Album"
-        />
-        <strong>Rock dos bons</strong>
-        <p>Relaxe enquanto você programa ouvindo apenas as melhores do rock mundial</p>
-      </Playlist>
-    </List>
-  </Container>
-);
+class Browse extends Component {
+  static propTypes = {
+    getPlaylistsRequest: PropTypes.func.isRequired,
+    playlists: PropTypes.shape({
+      data: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        title: PropTypes.string,
+        thumbnail: PropTypes.string,
+        description: PropTypes.string,
+      })),
+    }).isRequired,
+  }
 
-export default Browse;
+  componentDidMount() {
+
+  }
+
+  render() {
+    return (
+      <Container>
+        <Title>Navegar</Title>
+
+        <List>
+          {this.props.playlists.data.map(playlist => (
+            <Playlist to={`/playlists/${playlist.id}`} key={playlist.id}>
+              <img
+                src={playlist.thumbnail}
+                alt={playlist.title}
+              />
+              <strong>{playlist.title}</strong>
+              <p>{playlist.description}</p>
+            </Playlist>
+          ))}
+        </List>
+      </Container>
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  playlists: state.playlists,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(PlaylistsActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Browse);

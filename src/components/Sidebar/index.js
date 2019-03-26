@@ -8,7 +8,7 @@ import { Container, NewPlaylist, Nav } from './styles';
 
 import AddPlaylistIcon from '../../assets/images/add_playlist.svg';
 
-import { Creators as PlaylistActions } from '../../store/ducks/playlists';
+import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
 
 class Sidebar extends Component {
   static propTypes = {
@@ -31,7 +31,7 @@ class Sidebar extends Component {
         <div>
           <Nav main>
             <li>
-              <a href="#">Navegar</a>
+              <Link to="/">Navegar</Link>
             </li>
             <li>
               <a href="#">Rádio</a>
@@ -92,7 +92,7 @@ const mapStateToProps = state => ({
   playlists: state.playlists,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(PlaylistActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(PlaylistsActions, dispatch);
 
 export default connect(
   mapStateToProps,
