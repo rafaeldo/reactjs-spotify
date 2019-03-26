@@ -7,6 +7,8 @@ export const Types = {
   NEXT: 'player/NEXT',
   PREV: 'player/PREV',
   PLAYING: 'player/PLAYING',
+  HANDLE_POSITION: 'player/HANDLE_POSITION',
+  SET_POSITION: 'player/SET_POSITION',
 };
 
 const INITIAL_STATE = {
@@ -14,6 +16,7 @@ const INITIAL_STATE = {
   list: [],
   status: Sound.status.PLAYING,
   position: null,
+  positionShown: null,
   duration: null,
 };
 
@@ -25,6 +28,7 @@ export default function player(state = INITIAL_STATE, action) {
         currentSong: action.payload.song,
         list: action.payload.list,
         status: Sound.status.PLAYING,
+        position: 0,
       };
     case Types.PLAY:
       return { ...state, status: Sound.status.PLAYING };
@@ -35,7 +39,12 @@ export default function player(state = INITIAL_STATE, action) {
       const next = state.list[nextCurrentIndex + 1];
 
       if (next) {
-        return { ...state, currentSong: next, status: Sound.status.PLAYING };
+        return {
+          ...state,
+          currentSong: next,
+          status: Sound.status.PLAYING,
+          position: 0,
+        };
       }
 
       return state;
@@ -44,12 +53,21 @@ export default function player(state = INITIAL_STATE, action) {
       const prev = state.list[prevCurrentIndex - 1];
 
       if (prev) {
-        return { ...state, currentSong: prev, status: Sound.status.PLAYING };
+        return {
+          ...state,
+          currentSong: prev,
+          status: Sound.status.PLAYING,
+          position: 0,
+        };
       }
 
       return state;
     case Types.PLAYING:
       return { ...state, position: action.payload.position, duration: action.payload.duration };
+    case Types.HANDLE_POSITION:
+      return { ...state, positionShown: state.duration * action.payload.percent };
+    case Types.SET_POSITION:
+      return { ...state, position: state.duration * action.payload.percent, positionShown: null };
     default:
       return state;
   }
@@ -75,5 +93,13 @@ export const Creators = {
   playing: ({ position, duration }) => ({
     type: Types.PLAYING,
     payload: { position, duration },
+  }),
+  handlePosition: percent => ({
+    type: Types.HANDLE_POSITION,
+    payload: { percent },
+  }),
+  setPosition: percent => ({
+    type: Types.SET_POSITION,
+    payload: { percent },
   }),
 };
