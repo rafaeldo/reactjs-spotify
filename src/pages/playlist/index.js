@@ -44,7 +44,7 @@ class Playlist extends Component {
     loadSong: PropTypes.func.isRequired,
     currentSong: PropTypes.shape({
       id: PropTypes.number,
-    }).isRequired,
+    }),
   };
 
   state = {
